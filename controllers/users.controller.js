@@ -103,7 +103,7 @@ usersCtrl.singup = async (req, res) => {
     });
   } else {
     // Look for email coincidence
-    const emailUser = await User.findOne({ email: email });
+    const emailUser = await User.findOne({ email: email }).lean();
     if (emailUser) {
       req.flash("error_msg", "The Email is already in use.");
       res.redirect("/users/signup");
@@ -132,7 +132,7 @@ usersCtrl.logout = (req, res) => {
   res.redirect("/users/signin");
 };
 usersCtrl.findAllUser = (req, res) => {
-  User.find()
+  User.find().lean()
     .then(users => {
       res.render("notes/edit-note.hbs", { users });
     }).catch(err => {
@@ -141,4 +141,4 @@ usersCtrl.findAllUser = (req, res) => {
       });
     });
 };
-module.exports = usersCtrl;
+module.exports = usersCtrl; 
